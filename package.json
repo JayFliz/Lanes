@@ -1,0 +1,10 @@
+{
+  "name": "Lanes",
+  "version": "1.0.0",
+  "description": "A CSS grid system made by Steer",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.7.0"
+  }
+}
