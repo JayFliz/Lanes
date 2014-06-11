@@ -5,6 +5,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.7.0"
+    "gulp": "^3.7.0",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-rename": "^1.2.0"
   }
 }

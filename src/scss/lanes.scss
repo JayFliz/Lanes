@@ -110,33 +110,16 @@ $gutter: 1.5%;
     margin-left: 0;
     margin-bottom: 10px;
 
-    &.one,
-    &.two,
-    &.three,
-    &.four,
-    &.five,
-    &.six,
-    &.seven,
-    &.eight,
-    &.nine,
-    &.ten,
-    &.eleven,
-    &.twelve {
-      width: 100%;
-    }
+    @each $val in $columns {
+      $column-name: nth($val, 1);
+      $column-number: nth($val, 2);
+      &.#{$column-name} {
+        width: 100%;
+      }
 
-    &.offset-by-one,
-    &.offset-by-two,
-    &.offset-by-three,
-    &.offset-by-four,
-    &.offset-by-five,
-    &.offset-by-six,
-    &.offset-by-seven,
-    &.offset-by-eight,
-    &.offset-by-nine,
-    &.offset-by-ten,
-    &.offset-by-eleven {
-      margin-left: 0;
+      &.offset-by-#{$column-name} {
+        margin-left: 0;
+      }
     }
   }
 }
