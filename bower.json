@@ -1,6 +1,6 @@
 {
   "name": "lanes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://steersystems.github.io/Lanes",
   "authors": "Sam Mason",
   "description": "A simple responsive grid made by Steer",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules"
+    "node_modules",
     "**/*.js",
     "src"
   ]
