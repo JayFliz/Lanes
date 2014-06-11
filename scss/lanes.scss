@@ -16,6 +16,13 @@
 
 -----------------------*/
 
+/* Vars */
+$columns: (one, 1), (two, 2), (three, 3), (four, 4), (five, 5), (six, 6), (seven, 7), (eight, 8), (nine, 9), (ten, 10), (eleven, 11), (twelve, 12);
+
+$column-width: 6.9583333%;
+$gutter: 1.5%;
+
+
 /* Mixins ------ */
 @mixin clearfix {
   zoom: 1; /* For IE 6/7 (trigger hasLayout) */
@@ -37,9 +44,10 @@
 }
 
 .container {
-  max-width: 960px;
+  max-width: 980px;
   position: relative;
   margin: 0 auto;
+  padding: 0 10px;
   @include clearfix;
 }
 
@@ -52,86 +60,33 @@
   float: left;
   display: block;
   margin-left: 1.5%;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   vertical-align: top;
 
   &:first-child {
     margin-left: 0;
   }
 
-  &.one {
-    width: 6.958%;
-  }
-  &.two {
-    width: 15.41%;
-  }
-  &.three {
-    width: 23.87%;
-  }
-  &.four {
-    width: 32.33%;
-  }
-  &.five {
-    width: 40.79%;
-  }
-  &.six {
-    width: 49.25%;
-  }
-  &.seven {
-    width: 57.70%;
-  }
-  &.eight {
-    width: 66.16%;
-  }
-  &.nine {
-    width: 74.62%;
-  }
-  &.ten {
-    width: 83.08%;
-  }
-  &.eleven {
-    width: 91.54%;
-  }
-  &.twelve {
-    width: 100%;
+  @each $val in $columns {
+    $column-name: nth($val, 1);
+    $column-number: nth($val, 2);
+
+    &.#{$column-name} {
+      width: $column-number * $column-width + ($gutter * ($column-number - 1));
+    }
   }
 }
 
 /* Offsets ------- */
 .columns,
 .column {
-  &.offset-by-one {
-    margin-left: 8.458%;
-  }
-  &.offset-by-two {
-    margin-left: 16.91%;
-  }
-  &.offset-by-three {
-    margin-left: 25.37%;
-  }
-  &.offset-by-four {
-    margin-left: 33.83%;
-  }
-  &.offset-by-five {
-    margin-left: 42.29%;
-  }
-  &.offset-by-six {
-    margin-left: 50.75%;
-  }
-  &.offset-by-seven {
-    margin-left: 59.2%;
-  }
-  &.offset-by-eight {
-    margin-left: 67.66%;
-  }
-  &.offset-by-nine {
-    margin-left: 76.12%;
-  }
-  &.offset-by-ten {
-    margin-left: 84.58%;
-  }
-  &.offset-by-eleven {
-    margin-left: 93.04%;
+  @each $val in $columns {
+    $column-name: nth($val, 1);
+    $column-number: nth($val, 2);
+
+    &.offset-by-#{$column-name} {
+      margin-left: $column-number * $column-width + $gutter * $column-number;
+    }
   }
 }
 
@@ -140,6 +95,7 @@
 .columns {
   &.centered {
     float: none;
+    clear: both;
     margin-left: auto;
     margin-right: auto;
   }
