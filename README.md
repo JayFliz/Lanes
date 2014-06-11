@@ -10,18 +10,22 @@ Using Lanes is really super simple, first off [download the file]().
 
 ### 2. Link the stylesheet
 The link Lanes to your HTML head:
-`<link rel="stylesheet" href="css/lanes.min.css">`
+````html
+<link rel="stylesheet" href="css/lanes.min.css">
+````
 
 ### 3. Responsive
 Remember to add the viewport meta tag to your head:
-`<meta name="viewport" content="width=device-width">`
+````html
+<meta name="viewport" content="width=device-width">
+````
 
 ## Using Lanes
 You can add a class of `container` around your site to set a width of `960px` and align it to the center of the page.
 
 To use the grid you must specify a `row` class to contain your 12 columns.
 
-````
+````html
 <div class="row">
 
 </div>
@@ -29,7 +33,7 @@ To use the grid you must specify a `row` class to contain your 12 columns.
 
 You have 12 columns in each row that you cna use. To create them just use the `column/s` class.
 
-````
+````html
 <div class="row">
   <div class="four columns">
 
@@ -46,7 +50,7 @@ You have 12 columns in each row that you cna use. To create them just use the `c
 ## Offsets
 You can also offset columns by a number of columns as well.
 
-````
+````html
 <div class="row">
   <div class="six columns offset-by-6">
 
