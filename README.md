@@ -65,5 +65,11 @@ We have created one breakpoint at `480px` for small devices. At this size all th
 ## Extras
 You can center columns into the middle of the page by adding the `centered` class (a caveat of this is that you can only have one centered set of columns per row).
 
+## Bower
+If you're into [Bower](http://bower.io/) you can install Lanes from there.
+````
+bower install lanes
+````
+
 ## License
 Do what you want. See [LICENSE](https://github.com/steersystems/Lanes/blob/master/LICENSE) (MIT)
