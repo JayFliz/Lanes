@@ -1,7 +1,7 @@
 # Lanes responsive Grid
 A simple responsive grid created by [Steer](http://steer.me) for our students, but available to all for free.
 
-Want to see a demo check out the [site](http://steersystems.github.io/lanes).
+Want to see a demo check out the [site](http://steersystems.github.io/Lanes).
 
 ## Quick start
 
@@ -31,7 +31,7 @@ To use the grid you must specify a `row` class to contain your 12 columns.
 </div>
 ````
 
-You have 12 columns in each row that you cna use. To create them just use the `column/s` class.
+You have 12 columns in each row that you can use. To create them just use the `column/s` class.
 
 ````html
 <div class="row">
@@ -66,4 +66,4 @@ We have created one breakpoint at `480px` for small devices. At this size all th
 You can center columns into the middle of the page by adding the `centered` class (a caveat of this is that you can only have one centered set of columns per row).
 
 ## License
-Do what you want. See [LICENSE]() (MIT)
+Do what you want. See [LICENSE](https://github.com/steersystems/Lanes/blob/master/LICENSE) (MIT)
