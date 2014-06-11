@@ -8,11 +8,11 @@ Want to see a demo check out the [site](http://steersystems.github.io/Lanes).
 ### 1. Download
 Using Lanes is really super simple, first off [download the files](https://github.com/steersystems/Lanes/archive/master.zip), open up the zip file and the files you want are in the `dist` folder.
 
-You can use either `lanes.min.css` or `lanes.css` both have the same code but the `.min` verison has been compressed to make it smaller.
+You can use either `lanes.min.css` or `lanes.css`, both have the same code but the `.min.css` verison has been compressed to make it smaller.
 
 
 ### 2. Link the stylesheet
-The link Lanes to your HTML head:
+Link Lanes CSS to your HTML head:
 ````html
 <link rel="stylesheet" href="css/lanes.min.css">
 ````
