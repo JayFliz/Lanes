@@ -55,7 +55,7 @@ You can also offset columns by a number of columns as well.
 
 ````html
 <div class="row">
-  <div class="six columns offset-by-6">
+  <div class="six columns offset-by-six">
 
   </div>
 </div>
