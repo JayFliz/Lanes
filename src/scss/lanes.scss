@@ -16,26 +16,6 @@
 
 -----------------------*/
 
-/* Vars */
-$columns: (one, 1), (two, 2), (three, 3), (four, 4), (five, 5), (six, 6), (seven, 7), (eight, 8), (nine, 9), (ten, 10), (eleven, 11), (twelve, 12);
-
-$column-width: 6.9583333%;
-$gutter: 1.5%;
-
-
-/* Mixins ------ */
-@mixin clearfix {
-  zoom: 1; /* For IE 6/7 (trigger hasLayout) */
-  &:before,
-  &:after {
-    content: "";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
-}
-
 
 * {
   -webkit-box-sizing: border-box;
@@ -43,56 +23,98 @@ $gutter: 1.5%;
   box-sizing: border-box;
 }
 
+// Space between columns
+
+$grid-gutter: 20px !default;
+
+
+// Max width of container
+
+$grid-max-width: 980px + ($grid-gutter * 2) !default;
+
+
+// Number of total columns
+
+$grid-columns: 12 !default;
+
+
+// Breakpoint
+
+$breakpoint-size: 480px !default;
+
+
+// Columns list
+
+$columns: one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, eighteen, nineteen, twenty, twenty-one, twenty-two, twenty-three, twenty-four;
+
+
+// Grid loop mixin
+
+$gutter-percentage: ($grid-gutter / $grid-max-width) * 100%;
+
+@mixin grid-loop {
+  @for $i from 0 through $grid-columns {
+
+    @if $i != 0 {
+      $column-name: nth($columns,$i);
+      .column,
+      .columns {
+        &.#{$column-name} {
+          width: percentage($i / $grid-columns) - $gutter-percentage * (1 - $i / $grid-columns);
+        }
+      }
+    }
+  }
+}
+
+
+@mixin offset-loop {
+  @for $i from 0 through $grid-columns {
+    @if $i != 0 {
+      $column-name: nth($columns,$i);
+      $column-width: percentage($i / $grid-columns) - $gutter-percentage * (1 - $i / $grid-columns);
+      .column,
+      .columns {
+        &.offset-by-#{$column-name} {
+          margin-left: $column-width + $gutter-percentage;
+        }
+      }
+
+    }
+  }
+}
+
+
+/**
+* Grid scaffolding
+*/
+
 .container {
-  max-width: 980px;
-  position: relative;
+  max-width: $grid-max-width;
   margin: 0 auto;
-  padding: 0 10px;
-  @include clearfix;
+  padding: 0 $grid-gutter;
 }
 
 .row {
-  @include clearfix;
+  list-style: none;
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
 }
 
 .column,
 .columns {
   float: left;
-  display: block;
-  margin-left: 1.5%;
-  margin-bottom: 18px;
-  vertical-align: top;
-
+  margin-left: $gutter-percentage;
   &:first-child {
     margin-left: 0;
   }
-
-  @each $val in $columns {
-    $column-name: nth($val, 1);
-    $column-number: nth($val, 2);
-
-    &.#{$column-name} {
-      width: $column-number * $column-width + ($gutter * ($column-number - 1));
-    }
-  }
-}
-
-/* Offsets ------- */
-.columns,
-.column {
-  @each $val in $columns {
-    $column-name: nth($val, 1);
-    $column-number: nth($val, 2);
-
-    &.offset-by-#{$column-name} {
-      margin-left: $column-number * $column-width + $gutter * $column-number;
-    }
-  }
-}
-
-/* Centered ------------------------- */
-.column,
-.columns {
   &.centered {
     float: none;
     clear: both;
@@ -102,23 +124,28 @@ $gutter: 1.5%;
 }
 
 
-/* Mobile Screens ------------------- */
+/**
+* Columns generator
+*/
 
-@media screen and (max-width: 480px) {
-  .column,
-  .columns {
-    margin-left: 0;
-    margin-bottom: 10px;
+@include grid-loop;
 
-    @each $val in $columns {
-      $column-name: nth($val, 1);
-      $column-number: nth($val, 2);
-      &.#{$column-name} {
-        width: 100%;
-      }
+@include offset-loop;
 
-      &.offset-by-#{$column-name} {
-        margin-left: 0;
+@media screen and (max-width: $breakpoint-size) {
+  @for $i from 0 through $grid-columns {
+    @if $i != 0 {
+      $column-name: nth($columns,$i);
+      .column,
+      .columns {
+        &.#{$column-name} {
+          width: 100%;
+          margin-left: 0;
+        }
+
+        &.offset-by-#{$column-name} {
+          margin-left: 0;
+        }
       }
     }
   }
