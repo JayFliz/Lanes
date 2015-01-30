@@ -60,7 +60,7 @@ $gutter-percentage: ($grid-gutter / $grid-max-width) * 100%;
       .column,
       .columns {
         &.#{$column-name} {
-          width: percentage($i / $grid-columns) - $gutter-percentage * (1 - $i / $grid-columns);
+          width: percentage($i/$grid-columns);
         }
       }
     }
@@ -72,11 +72,10 @@ $gutter-percentage: ($grid-gutter / $grid-max-width) * 100%;
   @for $i from 0 through $grid-columns {
     @if $i != 0 {
       $column-name: nth($columns,$i);
-      $column-width: percentage($i / $grid-columns) - $gutter-percentage * (1 - $i / $grid-columns);
       .column,
       .columns {
         &.offset-by-#{$column-name} {
-          margin-left: $column-width + $gutter-percentage;
+          margin-left: percentage($i/$grid-columns);
         }
       }
 
@@ -97,6 +96,7 @@ $gutter-percentage: ($grid-gutter / $grid-max-width) * 100%;
 
 .row {
   list-style: none;
+  margin-left: -$grid-gutter;
   &:before,
   &:after {
     content: '';
@@ -111,10 +111,7 @@ $gutter-percentage: ($grid-gutter / $grid-max-width) * 100%;
 .column,
 .columns {
   float: left;
-  margin-left: $gutter-percentage;
-  &:first-child {
-    margin-left: 0;
-  }
+  padding-left: $gutter-percentage;
   &.centered {
     float: none;
     clear: both;
