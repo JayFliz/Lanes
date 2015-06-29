@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lanesApp" ng-controller="GridGenCtrl">
+<head>
+  <meta charset="UTF-8">
+  <title>Lanes Grid</title>
+
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="css/site.css">
+  <script src="js/angular.js"></script>
+  <script src="js/lanes.js"></script>
+
+  <style>
+  .container {
+    max-width: {{containerWidth + 20}}px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+
+  .row:before, .row:after {
+    content: " ";
+    display: table;
+  }
+
+  .row:after {
+    clear: both;
+  }
+
+  .column, .columns {
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+  }
+
+  .column:first-child, .columns:first-child {
+    margin-left: 0;
+  }
+
+  .column.centered, .columns.centered {
+    float: none;
+    clear: both;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (min-width: {{breakpoint}}px) {
+
+    .container { width: 100%; }
+
+    .column, .columns { margin-left: {{gutterAsPercent()}}%; }
+
+    .one.column,
+    .one.columns          { width: {{calculateGrid(1)}}%; }
+    .two.columns          { width: {{calculateGrid(2)}}%; }
+    .three.columns        { width: {{calculateGrid(3)}}%; }
+    .four.columns         { width: {{calculateGrid(4)}}%; }
+    .five.columns         { width: {{calculateGrid(5)}}%; }
+    .six.columns          { width: {{calculateGrid(6)}}%; }
+    .seven.columns        { width: {{calculateGrid(7)}}%; }
+    .eight.columns        { width: {{calculateGrid(8)}}%; }
+    .nine.columns         { width: {{calculateGrid(9)}}%; }
+    .ten.columns          { width: {{calculateGrid(10)}}%; }
+    .eleven.columns       { width: {{calculateGrid(11)}}%; }
+    .twelve.columns       { width: 100%; margin-left: 0;  }
+
+    .offset-by-one.column,
+    .offset-by-one.columns       { margin-left: {{gridOffsetCalculate(1)}}%; }
+    .offset-by-two.column,
+    .offset-by-two.columns       { margin-left: {{gridOffsetCalculate(2)}}%; }
+    .offset-by-three.column,
+    .offset-by-three.columns     { margin-left: {{gridOffsetCalculate(3)}}%; }
+    .offset-by-four.column,
+    .offset-by-four.columns      { margin-left: {{gridOffsetCalculate(4)}}%; }
+    .offset-by-five.column,
+    .offset-by-five.columns      { margin-left: {{gridOffsetCalculate(5)}}%; }
+    .offset-by-six.column,
+    .offset-by-six.columns       { margin-left: {{gridOffsetCalculate(6)}}%; }
+    .offset-by-seven.column,
+    .offset-by-seven.columns     { margin-left: {{gridOffsetCalculate(7)}}%; }
+    .offset-by-eight.column,
+    .offset-by-eight.columns     { margin-left: {{gridOffsetCalculate(8)}}%; }
+    .offset-by-nine.column,
+    .offset-by-nine.columns      { margin-left: {{gridOffsetCalculate(9)}}%; }
+    .offset-by-ten.column,
+    .offset-by-ten.columns       { margin-left: {{gridOffsetCalculate(10)}}%; }
+    .offset-by-eleven.column,
+    .offset-by-eleven.columns    { margin-left: {{gridOffsetCalculate(11)}}%; }
+  }
+  </style>
+
+</head>
+
+<body class="example">
+
+  <header class="site-container">
+    <h1>LANES</h1>
+    <h2>Build your own responsive grid, created by <i class="steer-logo"></i></h2>
+
+    <h3>How to use</h3>
+    <p>To use Lanes in your site you need to follow some simple guidelines.</p>
+    <p>The <strong>.container</strong> class is needed to set a width around your columns and align them into the center of the page.</p>
+    <p>The <strong>.row</strong> class is used to create horizontal column groups and within each row you have access to <strong>12 columns</strong>.</p>
+
+    <div class="instructions clearfix">
+      <p>To use the column feature, use the <strong>.columns</strong> class followed by the number of columns you want an element to take up in your <strong>.row</strong>. For example, if you would like a <strong>div</strong> to take up six columns you would write the following code.</p>
+
+      <code>
+      &lt;div class="row"&gt;<br>
+        &lt;div class="six columns"&gt;<br>
+          ...<br>
+        &lt;/div&gt;<br>
+      &lt;/div&gt;
+      </code>
+      <p>See a live example below</p>
+    </div>
+
+    <div class="row example-layout">
+      <div class="six columns"><p>.six.columns</p></div>
+    </div>
+
+    <div class="instructions clearfix">
+      <p>Sometimes you may want to leave a certain amount of space before a column starts, you can achieve this by using the <strong>.offset-by-</strong> classes. If I would like a six column wide div that was offset by two columns I would use the following code.</p>
+
+
+      <code>
+        &lt;div class="six columns offset-by-two"&gt;<br>
+          ...<br>
+        &lt;/div&gt;
+      </code>
+      <p>See offsets in action below</p>
+    </div>
+
+    <div class="row example-layout">
+      <div class="six columns offset-by-two"><p>.six.columns.offset-by-two</p></div>
+    </div>
+
+
+    <h3>Generate your grid</h3>
+    <p>All you need to do is copy the code below into your stylesheet and then you have access to the Lanes responsive grid.</p>
+
+    <p>If you don't like the default settings, feel free to change how wide the container is, the amount of space between columns (gutter) and when you would like the columns to stack on top of each other (breakpoint).</p>
+
+    <p>When you change any of the variables you will see the preview below update in realtime.</p>
+
+  </header>
+
+  <section class="site-container clearfix configurator">
+    <div class="grid-vars">
+      <div class="variable-field">
+        <label>Container Width:</label>
+        <div class="input-group">
+          <input type="number" placeholder="1280" ng-model="containerWidth">
+          <div class="input-addon">px</div>
+        </div>
+
+      </div>
+
+      <div class="variable-field">
+        <label>Gutter Width:</label>
+        <div class="input-group">
+          <input type="number" placeholder="40" ng-model="gutterWidth">
+          <div class="input-addon">px</div>
+        </div>
+      </div>
+
+      <div class="variable-field">
+        <label>Breakpoint:</label>
+        <div class="input-group">
+          <input type="number" placeholder="400" ng-model="breakpoint">
+          <div class="input-addon">px</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="grid-code-container">
+      <p>Copy/Paste into your stylesheet</p>
+
+
+      <textarea class="grid-code-css site-container" ng-click="onTextClick($event)" readonly>
+        /**
+        * Grid scaffolding
+        */
+
+        .container {
+          max-width: {{containerWidth + 20}}px;
+          position: relative;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: 10px;
+          padding-right: 10px;
+          box-sizing: border-box;
+        }
+
+        .row:before, .row:after {
+          content: " ";
+          display: table;
+        }
+
+        .row:after {
+          clear: both;
+        }
+
+        .column, .columns {
+          width: 100%;
+          float: left;
+          box-sizing: border-box;
+        }
+
+        .column:first-child, .columns:first-child {
+          margin-left: 0;
+        }
+
+        .column.centered, .columns.centered {
+          float: none;
+          clear: both;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media screen and (min-width: {{breakpoint}}px) {
+
+          .container { width: 100%; }
+
+          .column, .columns { margin-left: {{gutterAsPercent()}}%; }
+
+          .one.column,
+          .one.columns          { width: {{calculateGrid(1)}}%; }
+          .two.columns          { width: {{calculateGrid(2)}}%; }
+          .three.columns        { width: {{calculateGrid(3)}}%; }
+          .four.columns         { width: {{calculateGrid(4)}}%; }
+          .five.columns         { width: {{calculateGrid(5)}}%; }
+          .six.columns          { width: {{calculateGrid(6)}}%; }
+          .seven.columns        { width: {{calculateGrid(7)}}%; }
+          .eight.columns        { width: {{calculateGrid(8)}}%; }
+          .nine.columns         { width: {{calculateGrid(9)}}%; }
+          .ten.columns          { width: {{calculateGrid(10)}}%; }
+          .eleven.columns       { width: {{calculateGrid(11)}}%; }
+          .twelve.columns       { width: 100%; margin-left: 0;  }
+
+          /**
+          * Column Offsets
+          */
+
+          .offset-by-one.column,
+          .offset-by-one.columns       { margin-left: {{gridOffsetCalculate(1)}}%; }
+          .offset-by-two.column,
+          .offset-by-two.columns       { margin-left: {{gridOffsetCalculate(2)}}%; }
+          .offset-by-three.column,
+          .offset-by-three.columns     { margin-left: {{gridOffsetCalculate(3)}}%; }
+          .offset-by-four.column,
+          .offset-by-four.columns      { margin-left: {{gridOffsetCalculate(4)}}%; }
+          .offset-by-five.column,
+          .offset-by-five.columns      { margin-left: {{gridOffsetCalculate(5)}}%; }
+          .offset-by-six.column,
+          .offset-by-six.columns       { margin-left: {{gridOffsetCalculate(6)}}%; }
+          .offset-by-seven.column,
+          .offset-by-seven.columns     { margin-left: {{gridOffsetCalculate(7)}}%; }
+          .offset-by-eight.column,
+          .offset-by-eight.columns     { margin-left: {{gridOffsetCalculate(8)}}%; }
+          .offset-by-nine.column,
+          .offset-by-nine.columns      { margin-left: {{gridOffsetCalculate(9)}}%; }
+          .offset-by-ten.column,
+          .offset-by-ten.columns       { margin-left: {{gridOffsetCalculate(10)}}%; }
+          .offset-by-eleven.column,
+          .offset-by-eleven.columns    { margin-left: {{gridOffsetCalculate(11)}}%; }
+        }
+      </textarea>
+    </div>
+  </section>
+
+
+  <section class="container example-layout">
+    <div class="row">
+      <div class="twelve columns"><p>.twelve</p></div>
+    </div>
+
+    <div class="row">
+      <div class="one column"><p>.one</p></div>
+      <div class="eleven columns"><p>.eleven</p></div>
+    </div>
+
+    <div class="row">
+      <div class="two columns"><p>.two</p></div>
+      <div class="ten columns"><p>.ten</p></div>
+    </div>
+
+    <div class="row">
+      <div class="three columns"><p>.three</p></div>
+      <div class="nine columns"><p>.nine</p></div>
+    </div>
+
+    <div class="row">
+      <div class="four columns"><p>.four</p></div>
+      <div class="eight columns"><p>.eight</p></div>
+    </div>
+
+    <div class="row">
+      <div class="five columns"><p>.five</p></div>
+      <div class="seven columns"><p>.seven</p></div>
+    </div>
+
+    <div class="row">
+      <div class="six columns"><p>.six</p></div>
+      <div class="six columns"><p>.six</p></div>
+    </div>
+  </section>
+
+  <section class="container example-layout">
+    <div class="row">
+      <div class="six columns centered"><p>.six.centered</p></div>
+    </div>
+  </section>
+
+  <section class="container example-layout offsets">
+
+    <div class="row">
+      <div class="eleven columns offset-by-one"><p>.eleven.offset-by-one</p></div>
+    </div>
+    <div class="row">
+      <div class="ten columns offset-by-two"><p>.ten.offset-by-two</p></div>
+    </div>
+    <div class="row">
+      <div class="nine columns offset-by-three"><p>.nine.offset-by-three</p></div>
+    </div>
+    <div class="row">
+      <div class="eight columns offset-by-four"><p>.eight.offset-by-four</p></div>
+    </div>
+    <div class="row">
+      <div class="seven columns offset-by-five"><p>.seven.offset-by-five</p></div>
+    </div>
+    <div class="row">
+      <div class="six columns offset-by-six"><p>.six.offset-by-six</p></div>
+    </div>
+  </section>
+
+
+
+</body>
+</html>
