@@ -1,2 +1,4 @@
 bundle
 .rbenv-gemsets
+.sass-cache
+_site
